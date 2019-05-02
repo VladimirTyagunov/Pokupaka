@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
-@Table(name = "DEAL")
+@Table(name = "deal")
 public class Deal {
     @Id
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "deal")
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "deal", orphanRemoval = true)
     private Set<Order> list;
 
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "DEAL_ID")
+    @JoinColumn(name = "category_id")
     private Category category;
 
+    public Deal() {
+    }
 }

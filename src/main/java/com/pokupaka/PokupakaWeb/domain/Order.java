@@ -6,23 +6,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "order_table")
 public class Order {
     @Id
     @GeneratedValue
     private Long id;
 
-//    @OneToMany
-//    @MapKeyJoinColumn(name = "ID")
+
+//    @ManyToMany
+//    @JoinTable(
+//            name="order_products",
+//            joinColumns=@JoinColumn(name="order_table_id"),
+//            inverseJoinColumns=@JoinColumn(name="product_id"))
 //    private Map<Product, Integer> m;
 
+    @Column(name = "status")
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "ORDER_IDd")
+    @JoinColumn(name = "deal_id")
     private Deal deal;
 
     @ManyToOne
-    @JoinColumn(name = "ORDER_IDc")
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    public Order() {
+    }
 }

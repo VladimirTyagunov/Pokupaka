@@ -4,19 +4,27 @@ package com.pokupaka.PokupakaWeb.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "description")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID")
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    public Product() {
+    }
 
     public Long getId() {
         return id;

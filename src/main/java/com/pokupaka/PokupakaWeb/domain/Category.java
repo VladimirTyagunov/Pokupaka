@@ -1,20 +1,23 @@
 package com.pokupaka.PokupakaWeb.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    public Category() {
+    }
 
     public Long getId() {
         return id;

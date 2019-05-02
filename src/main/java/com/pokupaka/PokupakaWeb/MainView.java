@@ -6,8 +6,8 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-@StyleSheet("frontend://styles/styles.css")
 @Route
+@StyleSheet("frontend://styles/styles.css")
 public class MainView extends VerticalLayout {
 
     public MainView() {
@@ -16,6 +16,7 @@ public class MainView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         H1 header = new H1("Pokupaka WebApp");
+        header.getElement().getThemeList().add("dark");
 
         add(header);
 
