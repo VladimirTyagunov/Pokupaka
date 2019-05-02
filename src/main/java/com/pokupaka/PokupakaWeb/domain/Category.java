@@ -19,6 +19,16 @@ public class Category {
     public Category() {
     }
 
+    public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("'%s' category (id = %s). Description : %s",name,id,description);
+    }
+
     public Long getId() {
         return id;
     }

@@ -2,35 +2,48 @@ package com.pokupaka.PokupakaWeb.domain;
 
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "order_table")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue
     private Long id;
 
-
-//    @ManyToMany
-//    @JoinTable(
-//            name="order_products",
-//            joinColumns=@JoinColumn(name="order_table_id"),
-//            inverseJoinColumns=@JoinColumn(name="product_id"))
-//    private Map<Product, Integer> m;
-
     @Column(name = "status")
-    private String status;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "deal_id")
     private Deal deal;
+
+    @OneToMany(mappedBy = "order", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
     public Order() {
+    }
+
+    public Order(Status status, Deal deal, Category category) {
+        this.status = status;
+        this.deal = deal;
+        this.category = category;
+    }
+
+    public Order(Status status, Deal deal, Category category,List<OrderItem> orderItems) {
+        this.status = status;
+        this.deal = deal;
+        this.category = category;
+        this.orderItems.addAll(orderItems);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItem.setOrder(this);
+        orderItems.add(orderItem);
     }
 }

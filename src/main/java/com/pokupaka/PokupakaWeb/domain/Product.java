@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "product")
 public class Product {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -24,6 +25,13 @@ public class Product {
     private Category category;
 
     public Product() {
+    }
+
+    public Product(String name, double price, String description, Category category) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category = category;
     }
 
     public Long getId() {
@@ -60,5 +68,10 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("'%s' product (id = %s) for %s$. Description : %s",name,id,price,description);
     }
 }
