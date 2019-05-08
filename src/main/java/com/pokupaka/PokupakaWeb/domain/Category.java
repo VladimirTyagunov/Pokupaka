@@ -26,7 +26,8 @@ public class Category {
 
     @Override
     public String toString() {
-        return String.format("'%s' category (id = %s). Description : %s",name,id,description);
+        //return String.format("'%s' category (id = %s). Description : %s",name,id,description);
+        return String.format("%s",name);
     }
 
     public Long getId() {
