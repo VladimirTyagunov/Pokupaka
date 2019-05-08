@@ -2,60 +2,64 @@ package com.pokupaka.PokupakaWeb.views;
 
 import com.pokupaka.PokupakaWeb.domain.Product;
 import com.pokupaka.PokupakaWeb.repository.ProductRepository;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.shared.ui.ValueChangeMode;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.VaadinSessionScope;
-import com.vaadin.ui.*;
+import com.pokupaka.PokupakaWeb.components.ProductEditor;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@SpringView
-@VaadinSessionScope
-public class ProductsView extends HorizontalLayout implements View {
+@Route(value = "Product", layout = MainLayout.class)
+public class ProductsView extends HorizontalLayout {
+
+    private ProductRepository productRepository;
+    private final ProductEditor editor;
 
     public static String VIEW_NAME = "productView";
     private Grid<Product> productsGrid = new Grid<>(Product.class);
 
+    private final TextField filter = new TextField("", "Type to filter");
+    private final Button addNewBtn = new Button("Add new");
+    private final HorizontalLayout toolbar = new HorizontalLayout(filter, addNewBtn);
 
-   ProductRepository productRepository;
-
-    @Override
-    public void enter(ViewChangeEvent viewChangeEvent) {
-        System.out.println("entering product view  " + this.toString());
-    }
-
-    public ProductsView(ProductRepository productRepository) {
+    @Autowired
+    public ProductsView(ProductRepository productRepository,ProductEditor editor) {
         this.productRepository = productRepository;
+        this.editor = editor;
 
         final VerticalLayout vLayout = new VerticalLayout();
 
 
         Label productLabel = new Label(" Products ");
-        vLayout.addComponent(productLabel);
-        vLayout.setComponentAlignment(productLabel,Alignment.MIDDLE_CENTER);
+        vLayout.add(productLabel);
 
-        // Filter
-        TextField filter = new TextField("", "");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> showFilteredProducts(e.getValue()));
-        vLayout.addComponent(filter);
-        vLayout.setComponentAlignment(filter,Alignment.MIDDLE_LEFT);
 
 
         // Grid
-        productsGrid.setColumns("id","name","price","description","category");
-        vLayout.addComponent(productsGrid);
-        productsGrid.setWidth("80%");
+        productsGrid.setColumns("id", "name", "price", "description", "category");
+        productsGrid.asSingleSelect().addValueChangeListener(e -> { editor.editProduct(e.getValue()); });
 
-        //productsGrid.asSingleSelect().addValueChangeListener()
+        addNewBtn.addClickListener(e -> editor.editProduct(new Product()));
 
-        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponentsAndExpand(vLayout);
-        fillGrid();
+        editor.setChangeHandler(() -> {
+            editor.setVisible(false);
+            showFilteredProducts(filter.getValue());
+        });
+
+        vLayout.add(toolbar, productsGrid, editor);
+
+        add(vLayout);
+        showFilteredProducts("");
     }
 
     private void showFilteredProducts(String name) {
