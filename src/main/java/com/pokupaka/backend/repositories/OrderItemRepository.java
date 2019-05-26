@@ -1,6 +1,6 @@
-package com.pokupaka.PokupakaWeb.repository;
+package com.pokupaka.backend.repositories;
 
-import com.pokupaka.PokupakaWeb.domain.OrderItem;
+import com.pokupaka.backend.data.entity.OrderItem;
 import org.springframework.data.repository.CrudRepository;
 
 public interface OrderItemRepository extends CrudRepository<OrderItem,Long> {

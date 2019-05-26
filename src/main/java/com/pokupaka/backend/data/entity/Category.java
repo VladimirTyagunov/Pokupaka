@@ -1,14 +1,11 @@
-package com.pokupaka.PokupakaWeb.domain;
+package com.pokupaka.backend.data.entity;
 
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "category")
-public class Category {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Category extends AbstractEntity{
 
     @Column(name = "name")
     private String name;
@@ -28,10 +25,6 @@ public class Category {
     public String toString() {
         //return String.format("'%s' category (id = %s). Description : %s",name,id,description);
         return String.format("%s",name);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

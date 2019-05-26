@@ -1,4 +1,4 @@
-package com.pokupaka.PokupakaWeb.domain;
+package com.pokupaka.backend.data.entity;
 
 
 import javax.persistence.*;
@@ -7,10 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Order {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Order extends AbstractEntity {
 
     @Column(name = "status")
     private Status status;

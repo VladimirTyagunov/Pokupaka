@@ -1,14 +1,20 @@
 package com.pokupaka.PokupakaWeb.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.ui.Composite;
-import com.vaadin.ui.Label;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
 
-public class CategoriesView extends Composite implements View {
 
-    public static String VIEW_NAME = "categoriesView";
+@Route(value = "Category", layout = MainLayout.class)
+public class CategoriesView extends VerticalLayout {
 
-    public CategoriesView() {
-        setCompositionRoot(new Label("Categories will be displayed here "));
+    public class Category extends VerticalLayout {
+
+        Text text = new Text("Hello! This is Category List");
+
+        {
+            add(text);
+        }
     }
+
 }

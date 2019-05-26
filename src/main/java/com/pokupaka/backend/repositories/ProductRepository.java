@@ -1,6 +1,6 @@
-package com.pokupaka.PokupakaWeb.repository;
+package com.pokupaka.backend.repositories;
 
-import com.pokupaka.PokupakaWeb.domain.Product;
+import com.pokupaka.backend.data.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

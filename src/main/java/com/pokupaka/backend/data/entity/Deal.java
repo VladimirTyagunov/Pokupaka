@@ -1,15 +1,11 @@
-package com.pokupaka.PokupakaWeb.domain;
+package com.pokupaka.backend.data.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
 @Table(name = "deal")
-public class Deal {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Deal extends AbstractEntity {
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "deal", orphanRemoval = true)

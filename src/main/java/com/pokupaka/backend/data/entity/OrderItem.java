@@ -1,17 +1,11 @@
-package com.pokupaka.PokupakaWeb.domain;
+package com.pokupaka.backend.data.entity;
 
 import javax.persistence.*;
-// TODO consider using annotation below
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "order_items")
 @SequenceGenerator(name="orderItemsIds", initialValue=1, allocationSize=100) //TODO implement sequences for all tables
-public class OrderItem {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="orderItemsIds")
-    private Long id;
+public class OrderItem extends AbstractEntity{
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status",length = 20)
@@ -44,6 +38,6 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return String.format("Order Item (id = %s). Status : %s",id,status);
+        return String.format("Order Item (id = %s). Status : %s",super.getId(),status);
     }
 }
