@@ -46,11 +46,12 @@ public class DataGenerator implements HasLogger {
 						 OrderItemRepository orderItemRepository,
 						 UserRepository userRepository,
 						 ProductRepository productRepository,
-						 CategoryRepository categoryRepository
+						 CategoryRepository categoryRepository,
+						 PasswordEncoder passwordEncoder
 						 ) {
 		this.orderRepository = orderRepository;
 		this.userRepository = userRepository;
-		this.passwordEncoder = new BCryptPasswordEncoder();
+		this.passwordEncoder = passwordEncoder;
 		this.orderItemRepository = orderItemRepository;
 		this.categoryRepository = categoryRepository;
 		this.productRepository = productRepository;
@@ -61,16 +62,37 @@ public class DataGenerator implements HasLogger {
 	public void loadData() {
 
 		createAdmin(userRepository, passwordEncoder);
-		getLogger().info("Admin user created");
+		createAdmin2(userRepository, passwordEncoder);
+		createManager(userRepository,passwordEncoder);
+		createRegularUser(userRepository,passwordEncoder);
+		getLogger().info("Users created");
 
 		fillMyData();
 		logger.info("My data generated");
 	}
 
 	private User createAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		return userRepository.save(createUser("admin@vaadin.com", "Göran", "Rich",
+		return userRepository.save(createUser("admin@vaadin.com", "admin1", "admin1",
 				passwordEncoder.encode("admin"),
 				Role.ADMIN, true));
+	}
+
+	private User createAdmin2(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		return userRepository.save(createUser("admin2@vaadin.com", "admin12", "admin12",
+				passwordEncoder.encode("admin"),
+				Role.ADMIN, true));
+	}
+
+	private User createManager(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		return userRepository.save(createUser("man1@mail.ru", "man1", "man1",
+				passwordEncoder.encode("man1"),
+				Role.MANAGER, true));
+	}
+
+	private User createRegularUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		return userRepository.save(createUser("user1@mail.ru", "urer1", "urer1",
+				passwordEncoder.encode("user1"),
+				Role.USER, true));
 	}
 
 	private User createUser(String email, String firstName, String lastName, String passwordHash, String role,

@@ -1,5 +1,6 @@
 package com.pokupaka.PokupakaWeb.views;
 
+import com.pokupaka.backend.data.Role;
 import com.pokupaka.backend.data.entity.Product;
 import com.pokupaka.backend.repositories.ProductRepository;
 import com.pokupaka.PokupakaWeb.components.ProductEditor;
@@ -12,12 +13,14 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@Route(value = "Product", layout = MainLayout.class)
+@Route(value = "products", layout = MainLayout.class)
+@Secured(Role.ADMIN)
 public class ProductsView extends HorizontalLayout {
 
     private ProductRepository productRepository;

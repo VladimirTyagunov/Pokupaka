@@ -3,7 +3,7 @@ package com.pokupaka.app.security;
 import com.pokupaka.backend.data.Role;
 import com.pokupaka.backend.data.entity.User;
 import com.pokupaka.backend.repositories.UserRepository;
-import com.pokupaka.ui.utils.BakeryConst;
+import com.pokupaka.ui.utils.PokupakaAppConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private static final String LOGIN_PROCESSING_URL = "/login";
 	private static final String LOGIN_FAILURE_URL = "/login?error";
 	private static final String LOGIN_URL = "/login";
-	private static final String LOGOUT_SUCCESS_URL = "/" + BakeryConst.PAGE_STOREFRONT;
+	private static final String LOGOUT_SUCCESS_URL = "/" + PokupakaAppConst.PAGE_PRODUCTS;
 
 	private final UserDetailsService userDetailsService;
 

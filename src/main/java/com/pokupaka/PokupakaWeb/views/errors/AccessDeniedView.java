@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Tag("access-denied-view")
 @HtmlImport("src/views/errors/access-denied-view.html")
 //@ParentLayout(MainView.class)
-//@PageTitle(BakeryConst.TITLE_ACCESS_DENIED)
+//@PageTitle(PokupakaAppConst.TITLE_ACCESS_DENIED)
 @Route
 public class AccessDeniedView extends PolymerTemplate<TemplateModel> implements HasErrorParameter<AccessDeniedException> {
 

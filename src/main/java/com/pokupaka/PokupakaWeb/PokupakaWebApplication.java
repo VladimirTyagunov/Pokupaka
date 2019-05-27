@@ -16,8 +16,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication(scanBasePackageClasses = { MainView.class,
-		DataGenerator.class,
 		SecurityConfiguration.class,
+		DataGenerator.class,
 		PokupakaWebApplication.class},
 		exclude = ErrorMvcAutoConfiguration.class)
 @EnableJpaRepositories(basePackageClasses = { UserRepository.class })

@@ -1,11 +1,10 @@
 package com.pokupaka.PokupakaWeb.views.login;
 
-/*import com.pokupaka.app.security.SecurityUtils;
-import com.pokupaka.ui.utils.BakeryConst;
-import com.pokupaka.ui.views.storefront.StorefrontView;*/
+
+import com.pokupaka.PokupakaWeb.views.MainView;
 import com.pokupaka.PokupakaWeb.views.ProductsView;
 import com.pokupaka.app.security.SecurityUtils;
-import com.pokupaka.ui.utils.BakeryConst;
+import com.pokupaka.ui.utils.PokupakaAppConst;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.login.LoginI18n;
@@ -16,7 +15,7 @@ import com.vaadin.flow.router.*;
 @Route()
 @PageTitle("PokupakaApp")
 @HtmlImport("styles/shared-styles.html")
-@Viewport(BakeryConst.VIEWPORT)
+@Viewport(PokupakaAppConst.VIEWPORT)
 public class LoginView extends LoginOverlay implements AfterNavigationObserver, BeforeEnterObserver {
 
 	public LoginView() {
@@ -43,7 +42,8 @@ public class LoginView extends LoginOverlay implements AfterNavigationObserver, 
 		if (SecurityUtils.isUserLoggedIn()) {
 			// Needed manually to change the URL because of https://github.com/vaadin/flow/issues/4189
 			UI.getCurrent().getPage().getHistory().replaceState(null, "");
-			event.rerouteTo(ProductsView.class);
+			System.out.println("rerouting to");
+			event.rerouteTo(MainView.class);
 		}
 	}
 
