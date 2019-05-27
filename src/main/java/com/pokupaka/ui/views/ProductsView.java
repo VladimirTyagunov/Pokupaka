@@ -1,9 +1,9 @@
-package com.pokupaka.PokupakaWeb.views;
+package com.pokupaka.ui.views;
 
 import com.pokupaka.backend.data.Role;
 import com.pokupaka.backend.data.entity.Product;
 import com.pokupaka.backend.repositories.ProductRepository;
-import com.pokupaka.PokupakaWeb.components.ProductEditor;
+import com.pokupaka.ui.components.ProductEditor;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;

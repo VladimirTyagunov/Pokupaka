@@ -1,7 +1,7 @@
 package com.pokupaka.app.security;
 
-import com.pokupaka.PokupakaWeb.exceptions.AccessDeniedException;
-import com.pokupaka.PokupakaWeb.views.login.LoginView;
+import com.pokupaka.ui.exceptions.AccessDeniedException;
+import com.pokupaka.ui.views.login.LoginView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;

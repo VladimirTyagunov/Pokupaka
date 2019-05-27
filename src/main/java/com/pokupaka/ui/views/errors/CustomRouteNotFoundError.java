@@ -1,7 +1,6 @@
-package com.pokupaka.PokupakaWeb.views.errors;
+package com.pokupaka.ui.views.errors;
 
 
-import com.pokupaka.PokupakaWeb.views.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.dependency.HtmlImport;

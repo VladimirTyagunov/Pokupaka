@@ -1,8 +1,7 @@
-package com.pokupaka.PokupakaWeb.views.login;
+package com.pokupaka.ui.views.login;
 
 
-import com.pokupaka.PokupakaWeb.views.MainView;
-import com.pokupaka.PokupakaWeb.views.ProductsView;
+import com.pokupaka.ui.views.MainView;
 import com.pokupaka.app.security.SecurityUtils;
 import com.pokupaka.ui.utils.PokupakaAppConst;
 import com.vaadin.flow.component.UI;

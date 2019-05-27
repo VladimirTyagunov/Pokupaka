@@ -1,4 +1,4 @@
-package com.pokupaka.PokupakaWeb.views;
+package com.pokupaka.ui.views;
 
 import com.pokupaka.app.security.SecurityUtils;
 import com.vaadin.flow.component.UI;

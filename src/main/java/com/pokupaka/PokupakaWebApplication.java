@@ -1,6 +1,6 @@
-package com.pokupaka.PokupakaWeb;
+package com.pokupaka;
 
-import com.pokupaka.PokupakaWeb.views.MainView;
+import com.pokupaka.ui.views.MainView;
 import com.pokupaka.app.DataGenerator;
 import com.pokupaka.app.security.SecurityConfiguration;
 import com.pokupaka.backend.data.entity.User;

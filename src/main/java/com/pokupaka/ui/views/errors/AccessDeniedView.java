@@ -1,7 +1,7 @@
-package com.pokupaka.PokupakaWeb.views.errors;
+package com.pokupaka.ui.views.errors;
 
 
-import com.pokupaka.PokupakaWeb.exceptions.AccessDeniedException;
+import com.pokupaka.ui.exceptions.AccessDeniedException;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;

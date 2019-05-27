@@ -1,4 +1,4 @@
-package com.pokupaka.PokupakaWeb.components;
+package com.pokupaka.ui.components;
 
 import com.pokupaka.backend.data.entity.Product;
 import com.pokupaka.backend.repositories.ProductRepository;

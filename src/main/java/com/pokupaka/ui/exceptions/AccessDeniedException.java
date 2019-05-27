@@ -1,4 +1,4 @@
-package com.pokupaka.PokupakaWeb.exceptions;
+package com.pokupaka.ui.exceptions;
 
 public class AccessDeniedException extends RuntimeException {
 	public AccessDeniedException() {

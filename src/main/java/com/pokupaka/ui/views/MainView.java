@@ -1,4 +1,4 @@
-package com.pokupaka.PokupakaWeb.views;
+package com.pokupaka.ui.views;
 
 
 import com.vaadin.flow.component.html.Label;
