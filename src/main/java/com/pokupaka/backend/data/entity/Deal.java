@@ -1,6 +1,7 @@
 package com.pokupaka.backend.data.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -11,6 +12,10 @@ public class Deal extends AbstractEntity {
             mappedBy = "deal", orphanRemoval = true)
     private Set<Order> list;
 
+    @Column(name = "name")
+    @Size(max = 255)
+    private String name;
+
     private String status;
 
     @ManyToOne
@@ -19,4 +24,17 @@ public class Deal extends AbstractEntity {
 
     public Deal() {
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
 }

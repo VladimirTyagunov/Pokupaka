@@ -1,6 +1,7 @@
 package com.pokupaka.ui.views.errors;
 
 
+import com.pokupaka.ui.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -9,7 +10,7 @@ import com.vaadin.flow.router.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-//@ParentLayout(MainView.class)
+@ParentLayout(MainLayout.class)
 @HtmlImport("styles/shared-styles.html")
 public class CustomRouteNotFoundError extends RouteNotFoundError {
 

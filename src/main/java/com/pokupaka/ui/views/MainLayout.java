@@ -1,11 +1,14 @@
 package com.pokupaka.ui.views;
 
 import com.pokupaka.app.security.SecurityUtils;
+import com.pokupaka.ui.views.admin.UsersView;
+import com.pokupaka.ui.views.products.ProductsView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AbstractAppRouterLayout;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.AppLayoutMenu;
 import com.vaadin.flow.component.applayout.AppLayoutMenuItem;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.server.InitialPageSettings;
@@ -13,7 +16,7 @@ import com.vaadin.flow.server.PageConfigurator;
 
 import static com.pokupaka.ui.utils.PokupakaAppConst.*;
 
-//@HtmlImport("frontend://styles/shared-styles.html")
+@HtmlImport("frontend://styles/shared-styles.html")
 //@PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 //@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 
@@ -26,18 +29,17 @@ public class MainLayout  extends AbstractAppRouterLayout implements PageConfigur
         if (SecurityUtils.isUserLoggedIn()) {
 
             if (SecurityUtils.isAccessGranted(ProductsView.class)) {
-                setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.CALENDAR.create(), TITLE_PRODUCTS, PAGE_PRODUCTS));
+                setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.RECORDS.create(), TITLE_PRODUCTS, PAGE_PRODUCTS));
+            }
+            setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.HANDSHAKE.create(), TITLE_DEALS, PAGE_DEALS));
+
+            if (SecurityUtils.isAccessGranted(UsersView.class)) {
+                setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.USERS.create(), TITLE_USERS, PAGE_USERS));
             }
 
-            setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.EDIT.create(), TITLE_STOREFRONT, PAGE_PRODUCTS));
-            //setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.CLOCK.create(), TITLE_DASHBOARD, PAGE_DASHBOARD));
-
-            /*if (SecurityUtils.isAccessGranted(UsersView.class)) {
-                setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.USER.create(), TITLE_USERS, PAGE_USERS));
-            }*/
-
-            setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.ARROW_RIGHT.create(), TITLE_LOGOUT, e ->
-                    UI.getCurrent().getPage().executeJavaScript("location.assign('logout')")));
+            AppLayoutMenuItem logoutMenuItem = new AppLayoutMenuItem(VaadinIcon.SIGN_OUT.create(), TITLE_LOGOUT, e ->
+                    UI.getCurrent().getPage().executeJavaScript("location.assign('logout')"));
+            setMenuItem(menu,logoutMenuItem);
         }
         getElement().addEventListener("search-focus", e -> {
             appLayout.getElement().getClassList().add("hide-navbar");

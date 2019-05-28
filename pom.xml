@@ -29,12 +29,26 @@
 			<artifactId>vaadin-spring-boot-starter</artifactId>
 		</dependency>
 
-
+		<!-- Vaadin -->
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.artur</groupId>
+			<artifactId>spring-data-provider</artifactId>
+			<version>2.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
 			<version>LATEST</version>
 		</dependency>
+		<!-- End of Vaadin -->
 
 		<dependency>
 			<groupId>mysql</groupId>

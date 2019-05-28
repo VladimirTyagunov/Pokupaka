@@ -2,18 +2,15 @@ package com.pokupaka.app;
 
 import com.pokupaka.backend.data.Role;
 import com.pokupaka.backend.data.entity.*;
-
-import com.pokupaka.backend.data.entity.User;
 import com.pokupaka.backend.repositories.*;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 @SpringComponent
@@ -78,7 +75,7 @@ public class DataGenerator implements HasLogger {
 	}
 
 	private User createAdmin2(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		return userRepository.save(createUser("admin2@vaadin.com", "admin12", "admin12",
+		return userRepository.save(createUser("admin2@vaadin.com", "admin12", "admin1",
 				passwordEncoder.encode("admin"),
 				Role.ADMIN, true));
 	}
@@ -115,17 +112,17 @@ public class DataGenerator implements HasLogger {
 		Category householdGoods = new Category("Household Goods","Сategory for household products");
 		Category furniture = new Category("Furniture","Сategory for different elemenst of furniture");
 
-		Product pen = new Product("Pen",5.0,"Just a pen", stationery);
-		Product pencil = new Product("Pencil",4.5,"Just a pencil", stationery);
-		Product ruler = new Product("Ruler",3.3,"Just a ruler", stationery);
+		Product pen = new Product("Pen","5","Just a pen", stationery);
+		Product pencil = new Product("Pencil","4","Just a pencil", stationery);
+		Product ruler = new Product("Ruler","3","Just a ruler", stationery);
 
-		Product mop = new Product("Mop",15.0,"Mop description", stationery);
-		Product vacuumСleaner = new Product("Vacuum cleaner",150.0,"Vacuum cleaner description", furniture);
-		Product cup = new Product("Cup",10.0,"Cup description", furniture);
+		Product mop = new Product("Mop","15","Mop description", stationery);
+		Product vacuumСleaner = new Product("Vacuum cleaner","150","Vacuum cleaner description", furniture);
+		Product cup = new Product("Cup","10","Cup description", furniture);
 
-		Product table = new Product("Table",100.0,"Table description", furniture);
-		Product chair = new Product("Chair",50.0,"Chair description", furniture);
-		Product sofa = new Product("Sofa",250.0,"Sofa description", furniture);
+		Product table = new Product("Table","100","Table description", furniture);
+		Product chair = new Product("Chair","50","Chair description", furniture);
+		Product sofa = new Product("Sofa","250","Sofa description", furniture);
 
 		Order order1 = new Order(Status.NOT_STARTED,null,stationery);
 
@@ -141,22 +138,12 @@ public class DataGenerator implements HasLogger {
 		categoryRepository.save(householdGoods);
 		categoryRepository.save(furniture);
 
-		productRepository.save(pen);
-		productRepository.save(pencil);
-		productRepository.save(ruler);
-		productRepository.save(mop);
-		productRepository.save(vacuumСleaner);
-		productRepository.save(cup);
-		productRepository.save(table);
-		productRepository.save(chair);
-		productRepository.save(sofa);
+		productRepository.saveAll(new ArrayList<Product>(Arrays.asList(pen,pencil,ruler, mop, vacuumСleaner,cup,table, chair,sofa)));
 
 		//orderItemRepository.save(orderItem1);
 		//orderItemRepository.save(orderItem2);
 
 		orderRepository.save(order1);
-
-
 
 		// fetch all categories
 		logger.info("Categories found with findAll():");

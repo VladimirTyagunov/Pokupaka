@@ -2,16 +2,26 @@ package com.pokupaka.backend.data.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "product")
 public class Product extends AbstractEntity{
 
     @Column(name = "name")
+    @Size(max = 255)
     private String name;
 
-    @Column(name = "price")
-    private double price;
+
+    // Real price * 100 as an int to avoid rounding errors
+    //@Min(value = 0, message = "{bakery.price.limits}")
+    //@Max(value = 100000, message = "{bakery.price.limits}")
+    //private Integer price;
+
+    //@Column(name = "price")
+    private String price;
 
     @Column(name = "description")
     private String description;
@@ -23,7 +33,7 @@ public class Product extends AbstractEntity{
     public Product() {
     }
 
-    public Product(String name, double price, String description, Category category) {
+    public Product(String name, String price, String description, Category category) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -38,11 +48,11 @@ public class Product extends AbstractEntity{
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
