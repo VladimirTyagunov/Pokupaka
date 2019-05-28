@@ -31,6 +31,7 @@ public class MainLayout  extends AbstractAppRouterLayout implements PageConfigur
             if (SecurityUtils.isAccessGranted(ProductsView.class)) {
                 setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.RECORDS.create(), TITLE_PRODUCTS, PAGE_PRODUCTS));
             }
+            setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.CART.create(), TITLE_MY_ORDERS, PAGE_ORDERS));
             setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.HANDSHAKE.create(), TITLE_DEALS, PAGE_DEALS));
 
             if (SecurityUtils.isAccessGranted(UsersView.class)) {

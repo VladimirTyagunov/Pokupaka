@@ -1,8 +1,9 @@
 package com.pokupaka.backend.service;
 
 import com.pokupaka.backend.data.entity.Deal;
+import com.pokupaka.backend.data.entity.Order;
 import com.pokupaka.backend.data.entity.User;
-import com.pokupaka.backend.repositories.DealRepository;
+import com.pokupaka.backend.repositories.OrderRepository;
 import com.pokupaka.ui.exceptions.UserFriendlyDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,20 +15,20 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class DealsService implements FilterableCrudService<Deal> {
+public class OrderService implements FilterableCrudService<Order> {
 
-    private final DealRepository dealRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public DealsService(DealRepository dealRepository) {
-        this.dealRepository = dealRepository;
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
     @Override
-    public Page<Deal> findAnyMatching(Optional<String> filter, Pageable pageable) {
+    public Page<Order> findAnyMatching(Optional<String> filter, Pageable pageable) {
         if (filter.isPresent()) {
             String repositoryFilter = "%" + filter.get() + "%";
-            return dealRepository.findByNameLikeIgnoreCase(repositoryFilter, pageable);
+            return orderRepository.findByNameLikeIgnoreCase(repositoryFilter, pageable);
         } else {
             return find(pageable);
         }
@@ -37,28 +38,28 @@ public class DealsService implements FilterableCrudService<Deal> {
     public long countAnyMatching(Optional<String> filter) {
         if (filter.isPresent()) {
             String repositoryFilter = "%" + filter.get() + "%";
-            return dealRepository.countByNameLikeIgnoreCase(repositoryFilter);
+            return orderRepository.countByNameLikeIgnoreCase(repositoryFilter);
         } else {
             return count();
         }
     }
 
-    public Page<Deal> find(Pageable pageable) {
-        return dealRepository.findBy(pageable);
+    public Page<Order> find(Pageable pageable) {
+        return orderRepository.findBy(pageable);
     }
 
     @Override
-    public JpaRepository<Deal, Long> getRepository() {
-        return dealRepository;
+    public JpaRepository<Order, Long> getRepository() {
+        return orderRepository;
     }
 
     @Override
-    public Deal createNew(User currentUser) {
-        return new Deal();
+    public Order createNew(User currentUser) {
+        return new Order();
     }
 
     @Override
-    public Deal save(User currentUser, Deal entity) {
+    public Order save(User currentUser, Order entity) {
         try {
             return FilterableCrudService.super.save(currentUser, entity);
         } catch (DataIntegrityViolationException e) {

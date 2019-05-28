@@ -5,7 +5,7 @@ import com.pokupaka.app.security.CurrentUser;
 import com.pokupaka.backend.data.entity.AbstractEntity;
 import com.pokupaka.backend.data.entity.util.EntityUtil;
 import com.pokupaka.backend.service.CrudService;
-import com.pokupaka.backend.service.UserFriendlyDataException;
+import com.pokupaka.ui.exceptions.UserFriendlyDataException;
 import com.pokupaka.ui.utils.messages.CrudErrorMessage;
 import com.pokupaka.ui.utils.messages.Message;
 import com.pokupaka.ui.EntityView;

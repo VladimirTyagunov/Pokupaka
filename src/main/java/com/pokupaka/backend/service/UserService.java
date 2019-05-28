@@ -2,6 +2,7 @@ package com.pokupaka.backend.service;
 
 import com.pokupaka.backend.data.entity.User;
 import com.pokupaka.backend.repositories.UserRepository;
+import com.pokupaka.ui.exceptions.UserFriendlyDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

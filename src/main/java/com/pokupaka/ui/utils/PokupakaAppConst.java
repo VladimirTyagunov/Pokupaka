@@ -10,11 +10,12 @@ public class PokupakaAppConst {
 
 	public static final String PAGE_ROOT = "";
 	public static final String PAGE_PRODUCTS = "products";
+	public static final String PAGE_ORDERS = "orders";
 	public static final String PAGE_STOREFRONT_EDIT = "storefront/edit";
 	public static final String PAGE_DEALS = "deals";
 	public static final String PAGE_USERS = "users";
 
-	public static final String TITLE_STOREFRONT = "Storefront";
+	public static final String TITLE_MY_ORDERS = "My orders";
 	public static final String TITLE_DEALS = "Deals";
 	public static final String TITLE_USERS = "Users";
 	public static final String TITLE_PRODUCTS = "Products";

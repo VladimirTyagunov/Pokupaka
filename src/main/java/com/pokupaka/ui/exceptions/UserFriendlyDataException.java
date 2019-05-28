@@ -1,4 +1,4 @@
-package com.pokupaka.backend.service;
+package com.pokupaka.ui.exceptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
 

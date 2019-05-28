@@ -25,6 +25,12 @@ public class Deal extends AbstractEntity {
     public Deal() {
     }
 
+    public Deal(@Size(max = 255) String name, String status, Category category) {
+        this.name = name;
+        this.status = status;
+        this.category = category;
+    }
+
     public String getName() {
         return name;
     }

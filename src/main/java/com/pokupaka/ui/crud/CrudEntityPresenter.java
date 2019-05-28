@@ -4,7 +4,7 @@ import com.pokupaka.app.HasLogger;
 import com.pokupaka.app.security.CurrentUser;
 import com.pokupaka.backend.data.entity.AbstractEntity;
 import com.pokupaka.backend.service.CrudService;
-import com.pokupaka.backend.service.UserFriendlyDataException;
+import com.pokupaka.ui.exceptions.UserFriendlyDataException;
 import com.pokupaka.ui.utils.messages.CrudErrorMessage;
 import com.pokupaka.ui.HasNotifications;
 import org.springframework.dao.DataIntegrityViolationException;

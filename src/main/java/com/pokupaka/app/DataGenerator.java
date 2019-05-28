@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import static com.pokupaka.backend.data.entity.Status.NOT_STARTED;
+
 @SpringComponent
 public class DataGenerator implements HasLogger {
 
@@ -33,6 +35,7 @@ public class DataGenerator implements HasLogger {
 
 	private OrderRepository orderRepository;
 	private OrderItemRepository orderItemRepository;
+	private DealRepository dealRepository;
 	private CategoryRepository categoryRepository;
 	private ProductRepository productRepository;
 	private UserRepository userRepository;
@@ -41,6 +44,7 @@ public class DataGenerator implements HasLogger {
 	@Autowired
 	public DataGenerator(OrderRepository orderRepository,
 						 OrderItemRepository orderItemRepository,
+						 DealRepository dealRepository,
 						 UserRepository userRepository,
 						 ProductRepository productRepository,
 						 CategoryRepository categoryRepository,
@@ -48,6 +52,7 @@ public class DataGenerator implements HasLogger {
 						 ) {
 		this.orderRepository = orderRepository;
 		this.userRepository = userRepository;
+		this.dealRepository = dealRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.orderItemRepository = orderItemRepository;
 		this.categoryRepository = categoryRepository;
@@ -124,13 +129,15 @@ public class DataGenerator implements HasLogger {
 		Product chair = new Product("Chair","50","Chair description", furniture);
 		Product sofa = new Product("Sofa","250","Sofa description", furniture);
 
-		Order order1 = new Order(Status.NOT_STARTED,null,stationery);
+		Deal deal1 = new Deal("Stationery deal","Not started",stationery);
 
-		OrderItem orderItem1 = new OrderItem(Status.NOT_STARTED,order1,pen,3);
-		OrderItem orderItem2 = new OrderItem(Status.NOT_STARTED,order1,pen,5);
+		Order order1 = new Order(NOT_STARTED,deal1,pen,3);
 
-		order1.addOrderItem(orderItem1);
-		order1.addOrderItem(orderItem2);
+		//OrderItem orderItem1 = new OrderItem(Status.NOT_STARTED,order1,pen,3);
+		//OrderItem orderItem2 = new OrderItem(Status.NOT_STARTED,order1,pen,5);
+
+		//order1.addOrderItem(orderItem1);
+		//order1.addOrderItem(orderItem2);
 
 
 		// saving the data
@@ -138,11 +145,12 @@ public class DataGenerator implements HasLogger {
 		categoryRepository.save(householdGoods);
 		categoryRepository.save(furniture);
 
-		productRepository.saveAll(new ArrayList<Product>(Arrays.asList(pen,pencil,ruler, mop, vacuumСleaner,cup,table, chair,sofa)));
+		productRepository.saveAll(new ArrayList<>(Arrays.asList(pen,pencil,ruler, mop, vacuumСleaner,cup,table, chair,sofa)));
 
 		//orderItemRepository.save(orderItem1);
 		//orderItemRepository.save(orderItem2);
 
+		dealRepository.save(deal1);
 		orderRepository.save(order1);
 
 		// fetch all categories

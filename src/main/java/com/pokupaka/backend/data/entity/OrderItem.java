@@ -11,9 +11,9 @@ public class OrderItem extends AbstractEntity{
     @Column(name = "status",length = 20)
     private Status status;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Order order;*/
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -25,16 +25,26 @@ public class OrderItem extends AbstractEntity{
     public OrderItem() {
     }
 
+    /*
     public OrderItem(Status status, Order order,Product product,int quantity) {
         this.status = status;
         this.order = order;
         this.product = product;
         this.quantity = quantity;
     }
+    */
 
+    public OrderItem(Status status,Product product,int quantity) {
+        this.status = status;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    /*
     public void setOrder(Order order) {
         this.order = order;
     }
+    */
 
     @Override
     public String toString() {
