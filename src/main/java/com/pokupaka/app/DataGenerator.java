@@ -34,7 +34,6 @@ public class DataGenerator implements HasLogger {
 	private Logger logger = getLogger();
 
 	private OrderRepository orderRepository;
-	private OrderItemRepository orderItemRepository;
 	private DealRepository dealRepository;
 	private CategoryRepository categoryRepository;
 	private ProductRepository productRepository;
@@ -43,7 +42,6 @@ public class DataGenerator implements HasLogger {
 
 	@Autowired
 	public DataGenerator(OrderRepository orderRepository,
-						 OrderItemRepository orderItemRepository,
 						 DealRepository dealRepository,
 						 UserRepository userRepository,
 						 ProductRepository productRepository,
@@ -54,7 +52,6 @@ public class DataGenerator implements HasLogger {
 		this.userRepository = userRepository;
 		this.dealRepository = dealRepository;
 		this.passwordEncoder = passwordEncoder;
-		this.orderItemRepository = orderItemRepository;
 		this.categoryRepository = categoryRepository;
 		this.productRepository = productRepository;
 
@@ -63,13 +60,66 @@ public class DataGenerator implements HasLogger {
 	@PostConstruct
 	public void loadData() {
 
-		createAdmin(userRepository, passwordEncoder);
-		createAdmin2(userRepository, passwordEncoder);
-		createManager(userRepository,passwordEncoder);
-		createRegularUser(userRepository,passwordEncoder);
+		User admin1 = createAdmin(userRepository, passwordEncoder);
+		User admin2 = createAdmin2(userRepository, passwordEncoder);
+		User man1 = createManager(userRepository,passwordEncoder);
+		User regUser = createRegularUser(userRepository,passwordEncoder);
 		getLogger().info("Users created");
 
-		fillMyData();
+
+		Category stationery = new Category("Stationery","Сategory for some stationery stuff");
+		Category householdGoods = new Category("Household Goods","Сategory for household products");
+		Category furniture = new Category("Furniture","Сategory for different elemenst of furniture");
+
+		Product pen = new Product("Pen","5","Just a pen", stationery);
+		Product pencil = new Product("Pencil","4","Just a pencil", stationery);
+		Product ruler = new Product("Ruler","3","Just a ruler", stationery);
+
+		Product mop = new Product("Mop","15","Mop description", stationery);
+		Product vacuumСleaner = new Product("Vacuum cleaner","150","Vacuum cleaner description", furniture);
+		Product cup = new Product("Cup","10","Cup description", furniture);
+
+		Product table = new Product("Table","100","Table description", furniture);
+		Product chair = new Product("Chair","50","Chair description", furniture);
+		Product sofa = new Product("Sofa","250","Sofa description", furniture);
+
+		Deal deal1 = new Deal("Deal for stationery", NOT_STARTED,stationery);
+		Deal deal2 = new Deal("Deal for Household Goods",NOT_STARTED,householdGoods);
+		Deal deal3 = new Deal("Deal for Furniture",NOT_STARTED,stationery);
+
+		Order order1 = new Order(NOT_STARTED,deal1,admin1,pen,3);
+		Order order2 = new Order(NOT_STARTED,deal1,admin1,pen,3);
+		Order order3 = new Order(NOT_STARTED,deal1,admin1,pen,3);
+		Order order4 = new Order(NOT_STARTED,deal1,regUser,pen,3);
+		Order order5 = new Order(NOT_STARTED,deal1,regUser,pen,3);
+		Order order6 = new Order(NOT_STARTED,deal1,man1,pen,3);
+
+		//OrderItem orderItem1 = new OrderItem(Status.NOT_STARTED,order1,pen,3);
+		//OrderItem orderItem2 = new OrderItem(Status.NOT_STARTED,order1,pen,5);
+
+		//order1.addOrderItem(orderItem1);
+		//order1.addOrderItem(orderItem2);
+
+
+		// saving the data
+
+
+		categoryRepository.saveAll(new ArrayList<>(Arrays.asList(stationery,householdGoods,furniture)) );
+
+		productRepository.saveAll(new ArrayList<>(Arrays.asList(pen,pencil,ruler, mop, vacuumСleaner,cup,table, chair,sofa)));
+
+
+		//orderItemRepository.save(orderItem1);
+		//orderItemRepository.save(orderItem2);
+
+		dealRepository.saveAll(new ArrayList<>(Arrays.asList(deal1,deal2,deal3)));
+
+
+		orderRepository.save(order1);
+
+
+
+		//fillMyData();
 		logger.info("My data generated");
 	}
 
@@ -113,45 +163,6 @@ public class DataGenerator implements HasLogger {
 
 		// Filling the DB with some data
 
-		Category stationery = new Category("Stationery","Сategory for some stationery stuff");
-		Category householdGoods = new Category("Household Goods","Сategory for household products");
-		Category furniture = new Category("Furniture","Сategory for different elemenst of furniture");
-
-		Product pen = new Product("Pen","5","Just a pen", stationery);
-		Product pencil = new Product("Pencil","4","Just a pencil", stationery);
-		Product ruler = new Product("Ruler","3","Just a ruler", stationery);
-
-		Product mop = new Product("Mop","15","Mop description", stationery);
-		Product vacuumСleaner = new Product("Vacuum cleaner","150","Vacuum cleaner description", furniture);
-		Product cup = new Product("Cup","10","Cup description", furniture);
-
-		Product table = new Product("Table","100","Table description", furniture);
-		Product chair = new Product("Chair","50","Chair description", furniture);
-		Product sofa = new Product("Sofa","250","Sofa description", furniture);
-
-		Deal deal1 = new Deal("Stationery deal","Not started",stationery);
-
-		Order order1 = new Order(NOT_STARTED,deal1,pen,3);
-
-		//OrderItem orderItem1 = new OrderItem(Status.NOT_STARTED,order1,pen,3);
-		//OrderItem orderItem2 = new OrderItem(Status.NOT_STARTED,order1,pen,5);
-
-		//order1.addOrderItem(orderItem1);
-		//order1.addOrderItem(orderItem2);
-
-
-		// saving the data
-		categoryRepository.save(stationery);
-		categoryRepository.save(householdGoods);
-		categoryRepository.save(furniture);
-
-		productRepository.saveAll(new ArrayList<>(Arrays.asList(pen,pencil,ruler, mop, vacuumСleaner,cup,table, chair,sofa)));
-
-		//orderItemRepository.save(orderItem1);
-		//orderItemRepository.save(orderItem2);
-
-		dealRepository.save(deal1);
-		orderRepository.save(order1);
 
 		// fetch all categories
 		logger.info("Categories found with findAll():");

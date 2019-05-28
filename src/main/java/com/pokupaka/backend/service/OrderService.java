@@ -1,6 +1,5 @@
 package com.pokupaka.backend.service;
 
-import com.pokupaka.backend.data.entity.Deal;
 import com.pokupaka.backend.data.entity.Order;
 import com.pokupaka.backend.data.entity.User;
 import com.pokupaka.backend.repositories.OrderRepository;
@@ -28,7 +27,7 @@ public class OrderService implements FilterableCrudService<Order> {
     public Page<Order> findAnyMatching(Optional<String> filter, Pageable pageable) {
         if (filter.isPresent()) {
             String repositoryFilter = "%" + filter.get() + "%";
-            return orderRepository.findByNameLikeIgnoreCase(repositoryFilter, pageable);
+            return orderRepository.findByIdLike(repositoryFilter, pageable);
         } else {
             return find(pageable);
         }
@@ -38,7 +37,7 @@ public class OrderService implements FilterableCrudService<Order> {
     public long countAnyMatching(Optional<String> filter) {
         if (filter.isPresent()) {
             String repositoryFilter = "%" + filter.get() + "%";
-            return orderRepository.countByNameLikeIgnoreCase(repositoryFilter);
+            return orderRepository.countByIdLike(repositoryFilter);
         } else {
             return count();
         }

@@ -54,15 +54,20 @@ public class ProductsView extends AbstractPokupakaCrudView<Product> {
 
 	private static BinderCrudEditor<Product> createForm() {
 		TextField name = new TextField("Product name");
-		name.getElement().setAttribute("colspan", "2");
+		TextField category = new TextField("Category");
 		TextField price = new TextField("Price");
+
+
+		name.getElement().setAttribute("colspan", "2");
+		category.getElement().setAttribute("colspan", "2");
 		price.getElement().setAttribute("colspan", "2");
 
-		FormLayout form = new FormLayout(name, price);
+		FormLayout form = new FormLayout(name,category, price);
 
 		BeanValidationBinder<Product> binder = new BeanValidationBinder<>(Product.class);
 
 		binder.bind(name, "name");
+		binder.bind(category,"category.name");
 
 		//binder.forField(price).withConverter(new PriceConverter()).bind("price");
 		binder.bind(price,"price");

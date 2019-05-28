@@ -4,16 +4,17 @@ import com.pokupaka.backend.data.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
-    List<Order> findByNameContaining(String name);
+    List<Order> findByIdContaining(String id);
 
     Page<Order> findBy(Pageable page);
 
-    Page<Order> findByNameLikeIgnoreCase(String name, Pageable page);
+    Page<Order> findByIdLike(String id, Pageable page);
 
-    int countByNameLikeIgnoreCase(String name);
+    int countByIdLike(String id);
 }

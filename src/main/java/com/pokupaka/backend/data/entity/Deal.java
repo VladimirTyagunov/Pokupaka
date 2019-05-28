@@ -16,7 +16,7 @@ public class Deal extends AbstractEntity {
     @Size(max = 255)
     private String name;
 
-    private String status;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -25,7 +25,7 @@ public class Deal extends AbstractEntity {
     public Deal() {
     }
 
-    public Deal(@Size(max = 255) String name, String status, Category category) {
+    public Deal(@Size(max = 255) String name, Status status, Category category) {
         this.name = name;
         this.status = status;
         this.category = category;
@@ -39,8 +39,16 @@ public class Deal extends AbstractEntity {
         this.name = name;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
 }
