@@ -2,11 +2,10 @@ package com.pokupaka.ui.views.orders;
 
 
 import com.pokupaka.app.security.CurrentUser;
-import com.pokupaka.backend.data.entity.Deal;
 import com.pokupaka.backend.data.entity.Order;
 import com.pokupaka.backend.data.entity.Status;
-import com.pokupaka.backend.service.DealsService;
 import com.pokupaka.backend.service.OrderService;
+import com.pokupaka.ui.components.AmountField;
 import com.pokupaka.ui.crud.AbstractPokupakaCrudView;
 import com.pokupaka.ui.utils.PokupakaAppConst;
 import com.pokupaka.ui.views.MainLayout;
@@ -14,6 +13,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.crud.BinderCrudEditor;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.PageTitle;
@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 
-import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_DEALS;
 import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_ORDERS;
 
 @Route(value = PAGE_ORDERS, layout = MainLayout.class)
@@ -45,7 +44,7 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
 
     @Override
     protected String getBasePage() {
-        return PAGE_DEALS;
+        return PAGE_ORDERS;
     }
 
     private static BinderCrudEditor<Order> createForm() {
@@ -54,7 +53,12 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
         status.setItems(Arrays.stream(Status.values()).map(val -> val.getValue()));
 
         TextField product = new TextField("Product");
-        TextField quantity = new TextField("Quantity");
+
+        NumberField quantity = new NumberField("quantity");
+        quantity.setValue(1d);
+        quantity.setMin(0);
+        quantity.setMax(100);
+        quantity.setHasControls(true);
 
         product.getElement().setAttribute("colspan", "2");
         quantity.getElement().setAttribute("colspan", "2");
@@ -66,9 +70,9 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
         BeanValidationBinder<Order> binder = new BeanValidationBinder<>(Order.class);
 
         binder.bind(product,"product.name");
-        binder.bind(quantity,"quantity");
-        binder.bind(status, deal -> deal.getStatus().getValue(),
-                (deal, stVal) -> deal.setStatus(Status.findByStrValue(stVal)));
+        binder.bind(quantity, "quantity");
+        binder.bind(status, order -> order.getStatus().getValue(),
+                (order, stVal) -> order.setStatus(Status.findByStrValue(stVal)));
 
 
         return new BinderCrudEditor<Order>(binder, form) {
