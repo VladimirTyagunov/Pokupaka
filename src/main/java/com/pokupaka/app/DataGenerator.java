@@ -85,7 +85,7 @@ public class DataGenerator implements HasLogger {
 
 		Deal deal1 = new Deal("Deal for stationery", NOT_STARTED,stationery);
 		Deal deal2 = new Deal("Deal for Household Goods",NOT_STARTED,householdGoods);
-		Deal deal3 = new Deal("Deal for Furniture",NOT_STARTED,stationery);
+		Deal deal3 = new Deal("Deal for Furniture",NOT_STARTED,furniture);
 
 		Order order1 = new Order(NOT_STARTED,deal1,admin1,pen,3);
 		Order order2 = new Order(NOT_STARTED,deal1,admin1,pen,3);
@@ -94,29 +94,12 @@ public class DataGenerator implements HasLogger {
 		Order order5 = new Order(NOT_STARTED,deal1,regUser,pen,3);
 		Order order6 = new Order(NOT_STARTED,deal1,man1,pen,3);
 
-		//OrderItem orderItem1 = new OrderItem(Status.NOT_STARTED,order1,pen,3);
-		//OrderItem orderItem2 = new OrderItem(Status.NOT_STARTED,order1,pen,5);
-
-		//order1.addOrderItem(orderItem1);
-		//order1.addOrderItem(orderItem2);
-
-
 		// saving the data
 
-
 		categoryRepository.saveAll(new ArrayList<>(Arrays.asList(stationery,householdGoods,furniture)) );
-
 		productRepository.saveAll(new ArrayList<>(Arrays.asList(pen,pencil,ruler, mop, vacuumСleaner,cup,table, chair,sofa)));
-
-
-		//orderItemRepository.save(orderItem1);
-		//orderItemRepository.save(orderItem2);
-
 		dealRepository.saveAll(new ArrayList<>(Arrays.asList(deal1,deal2,deal3)));
-
-
-		orderRepository.save(order1);
-
+		orderRepository.saveAll(new ArrayList<>(Arrays.asList(order1,order2,order3,order4,order5,order6)));
 
 
 		//fillMyData();

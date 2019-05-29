@@ -14,12 +14,6 @@ public class Product extends AbstractEntity{
     @Size(max = 255)
     private String name;
 
-
-    // Real price * 100 as an int to avoid rounding errors
-    //@Min(value = 0, message = "{bakery.price.limits}")
-    //@Max(value = 100000, message = "{bakery.price.limits}")
-    //private Integer price;
-
     //@Column(name = "price")
     private String price;
 
@@ -74,6 +68,7 @@ public class Product extends AbstractEntity{
 
     @Override
     public String toString() {
-        return String.format("'%s' product (id = %s) for %s$. Description : %s",name,super.getId(),price,description);
+        return name;
+        //return String.format("'%s' product (id = %s) for %s$. Description : %s",name,super.getId(),price,description);
     }
 }

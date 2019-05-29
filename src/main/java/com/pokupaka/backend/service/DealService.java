@@ -16,12 +16,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class DealsService implements FilterableCrudService<Deal> {
+public class DealService implements FilterableCrudService<Deal> {
 
     private final DealRepository dealRepository;
 
     @Autowired
-    public DealsService(DealRepository dealRepository) {
+    public DealService(DealRepository dealRepository) {
         this.dealRepository = dealRepository;
     }
 

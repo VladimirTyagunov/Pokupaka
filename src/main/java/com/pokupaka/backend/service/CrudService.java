@@ -21,6 +21,7 @@ public interface CrudService<T extends AbstractEntity> {
 	}
 
 	default void delete(User currentUser, T entity) {
+		System.out.println("deleting " + entity.getClass() + "with id = " + entity.getId());
 		if (entity == null) {
 			throw new EntityNotFoundException();
 		}

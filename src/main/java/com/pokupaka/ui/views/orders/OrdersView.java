@@ -2,11 +2,15 @@ package com.pokupaka.ui.views.orders;
 
 
 import com.pokupaka.app.security.CurrentUser;
+import com.pokupaka.backend.data.entity.Deal;
 import com.pokupaka.backend.data.entity.Order;
+import com.pokupaka.backend.data.entity.Product;
 import com.pokupaka.backend.data.entity.Status;
 import com.pokupaka.backend.service.OrderService;
 import com.pokupaka.ui.components.AmountField;
 import com.pokupaka.ui.crud.AbstractPokupakaCrudView;
+import com.pokupaka.ui.dataproviders.DealDataProvider;
+import com.pokupaka.ui.dataproviders.ProductDataProvider;
 import com.pokupaka.ui.utils.PokupakaAppConst;
 import com.pokupaka.ui.views.MainLayout;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -22,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 
+import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.DEALS;
+import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.PRODUCT;
 import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_ORDERS;
 
 @Route(value = PAGE_ORDERS, layout = MainLayout.class)
@@ -29,8 +35,11 @@ import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_ORDERS;
 public class OrdersView extends AbstractPokupakaCrudView<Order> {
 
     @Autowired
-    public OrdersView(OrderService service, CurrentUser currentUser) {
-        super(Order.class, service, new Grid<>(), createForm(), currentUser);
+    public OrdersView(OrderService service,
+                      ProductDataProvider productDataProvider,
+                      DealDataProvider dealDataProvider,
+                      CurrentUser currentUser) {
+        super(Order.class, service, new Grid<>(), createForm(productDataProvider,dealDataProvider), currentUser);
     }
 
     @Override
@@ -47,18 +56,20 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
         return PAGE_ORDERS;
     }
 
-    private static BinderCrudEditor<Order> createForm() {
+    private static BinderCrudEditor<Order> createForm(ProductDataProvider productDataProvider,DealDataProvider dealDataProvider) {
+
+        /*ComboBox<Deal> deals = new ComboBox<>(DEALS);
+        deals.setDataProvider(dealDataProvider);*/
 
         ComboBox<String> status = new ComboBox<>("Status");
         status.setItems(Arrays.stream(Status.values()).map(val -> val.getValue()));
 
-        TextField product = new TextField("Product");
+        ComboBox<Product> product = new ComboBox<>(PRODUCT);
+        product.setDataProvider(productDataProvider);
 
-        NumberField quantity = new NumberField("quantity");
-        quantity.setValue(1d);
-        quantity.setMin(0);
-        quantity.setMax(100);
-        quantity.setHasControls(true);
+        TextField quantity = new TextField("quantity");;
+        quantity.setPattern("[0-9.,]*");
+        quantity.setPreventInvalidInput(true);
 
         product.getElement().setAttribute("colspan", "2");
         quantity.getElement().setAttribute("colspan", "2");
@@ -69,10 +80,14 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
 
         BeanValidationBinder<Order> binder = new BeanValidationBinder<>(Order.class);
 
-        binder.bind(product,"product.name");
-        binder.bind(quantity, "quantity");
-        binder.bind(status, order -> order.getStatus().getValue(),
-                (order, stVal) -> order.setStatus(Status.findByStrValue(stVal)));
+        binder.bind(product, order -> order.getProduct(),
+                    (deal, prodVal) -> deal.setProduct(prodVal));
+
+        binder.bind(quantity,order -> String.valueOf(order.getQuantity()),
+                (order, qValue) -> order.setQuantity(Integer.valueOf(qValue)));
+
+        binder.bind(status, deal -> getStatusStrIfNotNull(deal.getStatus()),
+                (deal, stVal) -> deal.setStatus(Status.findByStrValue(stVal)));
 
 
         return new BinderCrudEditor<Order>(binder, form) {
@@ -81,6 +96,10 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
                 return binder.validate().isOk();
             }
         };
+    }
+
+    private static String getStatusStrIfNotNull(Status status) {
+        return status == null ? "" : status.getValue();
     }
 
 }

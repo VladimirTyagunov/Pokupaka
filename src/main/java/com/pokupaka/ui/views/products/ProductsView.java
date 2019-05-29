@@ -25,6 +25,7 @@ import org.springframework.security.access.annotation.Secured;
 import java.util.Currency;
 
 import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.CATEGORY;
+import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.PRICE;
 import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_PRODUCTS;
 
 @Route(value = PAGE_PRODUCTS, layout = MainLayout.class)
@@ -45,8 +46,7 @@ public class ProductsView extends AbstractPokupakaCrudView<Product> {
 	protected void setupGrid(Grid<Product> grid) {
 		grid.addColumn(Product::getName).setHeader("Product Name").setFlexGrow(10);
 		grid.addColumn(deal -> deal.getCategory().getName()).setHeader(CATEGORY).setFlexGrow(10);
-		grid.addColumn(p -> currencySymbol + " " + String.valueOf(p.getPrice())).setHeader("Price").setFlexGrow(10);
-//		grid.setSortableColumns();
+		grid.addColumn(p -> currencySymbol + " " + String.valueOf(p.getPrice())).setHeader(PRICE).setFlexGrow(10);
 	}
 
 	@Override

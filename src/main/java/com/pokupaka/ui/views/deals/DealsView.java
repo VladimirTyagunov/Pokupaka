@@ -4,7 +4,7 @@ import com.pokupaka.app.security.CurrentUser;
 import com.pokupaka.backend.data.entity.Category;
 import com.pokupaka.backend.data.entity.Deal;
 import com.pokupaka.backend.data.entity.Status;
-import com.pokupaka.backend.service.DealsService;
+import com.pokupaka.backend.service.DealService;
 import com.pokupaka.ui.crud.AbstractPokupakaCrudView;
 import com.pokupaka.ui.dataproviders.CategoryDataProvider;
 import com.pokupaka.ui.utils.PokupakaAppConst;
@@ -31,7 +31,7 @@ import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_DEAL_DETAILS;
 public class DealsView extends AbstractPokupakaCrudView<Deal> {
 
     @Autowired
-    public DealsView(DealsService service, CategoryDataProvider categoryDataProvider, CurrentUser currentUser) {
+    public DealsView(DealService service, CategoryDataProvider categoryDataProvider, CurrentUser currentUser) {
         super(Deal.class, service, new Grid<>(), createForm(categoryDataProvider), currentUser);
     }
 

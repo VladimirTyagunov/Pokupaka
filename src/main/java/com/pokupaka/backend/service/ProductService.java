@@ -1,5 +1,6 @@
 package com.pokupaka.backend.service;
 
+import com.pokupaka.backend.data.entity.Category;
 import com.pokupaka.backend.data.entity.Product;
 import com.pokupaka.backend.data.entity.User;
 import com.pokupaka.backend.repositories.ProductRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,4 +70,7 @@ public class ProductService implements FilterableCrudService<Product> {
 
 	}
 
+	public List<Product> getProductsByCategory(Category category) {
+		return productRepository.findByCategory(category);
+	}
 }

@@ -1,5 +1,6 @@
 package com.pokupaka.backend.repositories;
 
+import com.pokupaka.backend.data.entity.Category;
 import com.pokupaka.backend.data.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByNameLikeIgnoreCase(String name, Pageable page);
 
     int countByNameLikeIgnoreCase(String name);
+
+    List<Product> findByCategory(Category category);
 }

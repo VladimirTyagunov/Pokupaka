@@ -9,10 +9,6 @@ import java.util.Set;
 @Table(name = "deal")
 public class Deal extends AbstractEntity {
 
-    @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "deal", orphanRemoval = true)
-    private Set<Order> list;
-
     @Column(name = "name")
     @Size(max = 255)
     private String name;

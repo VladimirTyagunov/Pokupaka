@@ -27,9 +27,11 @@ public class PokupakaAppConst {
 
 	public class Labels {
 		public static final String PRODUCT = "Product";
+		public static final String DEALS = "Deals";
 		public static final String QUANTITY = "Quantity";
 		public static final String STATUS = "Status";
 		public static final String CATEGORY = "Category";
+		public static final String PRICE = "Price";
 		public static final String ORDER_NUM = "Order №";
 		public static final String CONFIRM = "Confirm";
 	}

@@ -2,6 +2,7 @@ package com.pokupaka.backend.data.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +14,21 @@ public class Order extends AbstractEntity {
     @Column(name = "status")
     private Status status;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "deal_id")
     private Deal deal;
 
-    @OneToOne
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Min(1)
     @Column(name = "quantity")
-    private int quantity;
+    private int quantity = 1;
 
     public Order() {
     }
