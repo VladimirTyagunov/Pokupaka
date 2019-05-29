@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private static final String LOGIN_PROCESSING_URL = "/login";
 	private static final String LOGIN_FAILURE_URL = "/login?error";
 	private static final String LOGIN_URL = "/login";
-	private static final String LOGOUT_SUCCESS_URL = "/" + PokupakaAppConst.PAGE_PRODUCTS;
+	private static final String LOGOUT_SUCCESS_URL = "/" + PokupakaAppConst.PAGE_ORDERS;
 
 	private final UserDetailsService userDetailsService;
 

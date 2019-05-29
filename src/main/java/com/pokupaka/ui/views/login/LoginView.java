@@ -1,9 +1,9 @@
 package com.pokupaka.ui.views.login;
 
 
-import com.pokupaka.ui.views.MainView;
 import com.pokupaka.app.security.SecurityUtils;
 import com.pokupaka.ui.utils.PokupakaAppConst;
+import com.pokupaka.ui.views.orders.OrdersView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.login.LoginI18n;
@@ -40,9 +40,8 @@ public class LoginView extends LoginOverlay implements AfterNavigationObserver, 
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (SecurityUtils.isUserLoggedIn()) {
 			// Needed manually to change the URL because of https://github.com/vaadin/flow/issues/4189
-			UI.getCurrent().getPage().getHistory().replaceState(null, "");
-			System.out.println("rerouting to");
-			event.rerouteTo(MainView.class);
+			UI.getCurrent().getPage().getHistory().replaceState(null, "/" + PokupakaAppConst.PAGE_ORDERS);
+			event.rerouteTo(OrdersView.class);
 		}
 	}
 

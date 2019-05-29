@@ -15,7 +15,13 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
     Page<Order> findByIdLike(String id, Pageable page);
 
+    Page<Order> findByIdLikeAndUser(String id,String user, Pageable page);
+
     int countByIdLike(String id);
 
+    int countByIdLikeAndUser(String id,String user);
+
     List<Order> findByDealId(Long dealId);
+
+    List<Order> findByUserId(Long dealId);
 }

@@ -1,6 +1,8 @@
 package com.pokupaka.ui.crud;
 
 import com.pokupaka.app.security.CurrentUser;
+import com.pokupaka.app.security.SecurityUtils;
+import com.pokupaka.backend.data.Role;
 import com.pokupaka.backend.data.entity.AbstractEntity;
 import com.pokupaka.backend.data.entity.util.EntityUtil;
 import com.pokupaka.backend.service.FilterableCrudService;
@@ -15,7 +17,12 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import elemental.json.Json;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class AbstractPokupakaCrudView<E extends AbstractEntity> extends Crud<E>
@@ -51,7 +58,14 @@ public abstract class AbstractPokupakaCrudView<E extends AbstractEntity> extends
         CrudEntityDataProvider<E> dataProvider = new CrudEntityDataProvider<>(service);
         grid.setDataProvider(dataProvider);
         setupGrid(grid);
-        Crud.addEditColumn(grid);
+        List<String> allowedUsersToShowEditColumn = Arrays.asList(Role.ADMIN);
+        Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean canSeeEditColumn = userAuthentication.getAuthorities()
+                                                     .stream().map(GrantedAuthority::getAuthority)
+                                                     .anyMatch(allowedUsersToShowEditColumn::contains);
+        if(canSeeEditColumn) {
+            Crud.addEditColumn(grid);
+        }
 
         entityPresenter = new CrudEntityPresenter<>(service, currentUser, this);
 

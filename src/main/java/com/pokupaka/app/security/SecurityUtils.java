@@ -1,5 +1,7 @@
 package com.pokupaka.app.security;
 
+import com.pokupaka.backend.data.Role;
+import com.pokupaka.backend.data.entity.User;
 import com.pokupaka.ui.views.errors.AccessDeniedView;
 import com.pokupaka.ui.views.errors.CustomRouteNotFoundError;
 import com.pokupaka.ui.views.login.LoginView;
@@ -89,6 +91,10 @@ public final class SecurityUtils {
 	 */
 	public static boolean isUserLoggedIn() {
 		return isUserLoggedIn(SecurityContextHolder.getContext().getAuthentication());
+	}
+
+	public static boolean isAdmin(User user) {
+		return user.getRole().equals(Role.ADMIN);
 	}
 
 	private static boolean isUserLoggedIn(Authentication authentication) {

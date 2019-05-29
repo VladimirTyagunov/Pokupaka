@@ -15,8 +15,7 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@SpringBootApplication(scanBasePackageClasses = { MainView.class,
-		SecurityConfiguration.class,
+@SpringBootApplication(scanBasePackageClasses = { SecurityConfiguration.class, MainView.class,
 		DataGenerator.class,
 		PokupakaWebApplication.class},
 		exclude = ErrorMvcAutoConfiguration.class)
