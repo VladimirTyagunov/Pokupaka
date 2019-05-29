@@ -25,6 +25,15 @@ public class PokupakaAppConst {
 	public static final String TITLE_NOT_FOUND = "Page was not found";
 	public static final String TITLE_ACCESS_DENIED = "Access denied";
 
+	public class Labels {
+		public static final String PRODUCT = "Product";
+		public static final String QUANTITY = "Quantity";
+		public static final String STATUS = "Status";
+		public static final String CATEGORY = "Category";
+		public static final String ORDER_NUM = "Order №";
+		public static final String CONFIRM = "Confirm";
+	}
+
 	public static final String[] ORDER_SORT_FIELDS = {"dueDate", "dueTime", "id"};
 	public static final Sort.Direction DEFAULT_SORT_DIRECTION = Sort.Direction.ASC;
 

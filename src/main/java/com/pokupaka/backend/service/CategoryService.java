@@ -1,8 +1,8 @@
 package com.pokupaka.backend.service;
 
-import com.pokupaka.backend.data.entity.Deal;
+import com.pokupaka.backend.data.entity.Category;
 import com.pokupaka.backend.data.entity.User;
-import com.pokupaka.backend.repositories.DealRepository;
+import com.pokupaka.backend.repositories.CategoryRepository;
 import com.pokupaka.ui.exceptions.UserFriendlyDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,25 +11,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-public class DealsService implements FilterableCrudService<Deal> {
+public class CategoryService  implements FilterableCrudService<Category> {
 
-    private final DealRepository dealRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public DealsService(DealRepository dealRepository) {
-        this.dealRepository = dealRepository;
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
-    public Page<Deal> findAnyMatching(Optional<String> filter, Pageable pageable) {
+    public Page<Category> findAnyMatching(Optional<String> filter, Pageable pageable) {
         if (filter.isPresent()) {
             String repositoryFilter = "%" + filter.get() + "%";
-            return dealRepository.findByNameLikeIgnoreCase(repositoryFilter, pageable);
+            return categoryRepository.findByNameLikeIgnoreCase(repositoryFilter, pageable);
         } else {
             return find(pageable);
         }
@@ -39,35 +37,36 @@ public class DealsService implements FilterableCrudService<Deal> {
     public long countAnyMatching(Optional<String> filter) {
         if (filter.isPresent()) {
             String repositoryFilter = "%" + filter.get() + "%";
-            return dealRepository.countByNameLikeIgnoreCase(repositoryFilter);
+            return categoryRepository.countByNameLikeIgnoreCase(repositoryFilter);
         } else {
             return count();
         }
     }
 
-    public Page<Deal> find(Pageable pageable) {
-        return dealRepository.findBy(pageable);
+    public Page<Category> find(Pageable pageable) {
+        return categoryRepository.findBy(pageable);
     }
 
     @Override
-    public JpaRepository<Deal, Long> getRepository() {
-        return dealRepository;
+    public JpaRepository<Category, Long> getRepository() {
+        return categoryRepository;
     }
 
     @Override
-    public Deal createNew(User currentUser) {
-        return new Deal();
+    public Category createNew(User currentUser) {
+        return new Category();
     }
 
     @Override
-    public Deal save(User currentUser, Deal entity) {
+    public Category save(User currentUser, Category entity) {
         try {
             return FilterableCrudService.super.save(currentUser, entity);
         } catch (DataIntegrityViolationException e) {
             throw new UserFriendlyDataException(
-                    "There is already a deal with that name. Please select a unique name for the deal.");
+                    "There is already a category with that name. Please select a unique name for the category.");
         }
 
     }
 
 }
+

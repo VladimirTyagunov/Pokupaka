@@ -1,6 +1,7 @@
 package com.pokupaka.backend.data.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class Deal extends AbstractEntity {
     @Size(max = 255)
     private String name;
 
+    //@NotEmpty
     private Status status;
 
     @ManyToOne
@@ -51,4 +53,7 @@ public class Deal extends AbstractEntity {
         return category;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
