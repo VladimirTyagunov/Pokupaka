@@ -40,7 +40,7 @@ public class LoginView extends LoginOverlay implements AfterNavigationObserver, 
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (SecurityUtils.isUserLoggedIn()) {
 			// Needed manually to change the URL because of https://github.com/vaadin/flow/issues/4189
-			UI.getCurrent().getPage().getHistory().replaceState(null, "/" + PokupakaAppConst.PAGE_ORDERS);
+			UI.getCurrent().getPage().getHistory().replaceState(null, PokupakaAppConst.PAGE_ORDERS);
 			event.rerouteTo(OrdersView.class);
 		}
 	}

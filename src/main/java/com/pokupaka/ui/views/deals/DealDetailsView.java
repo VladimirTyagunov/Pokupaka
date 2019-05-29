@@ -75,7 +75,9 @@ public class DealDetailsView extends HorizontalLayout implements HasUrlParameter
         grid.addColumn(order -> order.getProduct().getName()).setHeader(PRODUCT).setFlexGrow(20);
         grid.addColumn(Order::getQuantity).setHeader(QUANTITY).setFlexGrow(10);
         grid.addColumn(order -> order.getStatus().getValue()).setHeader(STATUS).setFlexGrow(20);
-        grid.addColumn(order -> currencySymbol + " " + order.getTotalPrice()).setHeader(TOTAL_PRICE).setFlexGrow(10);
+        //grid.addColumn(order -> currencySymbol + " " + order.getTotalPrice()).setHeader(TOTAL_PRICE).setFlexGrow(10);
+        grid.addColumn(order -> currencySymbol + " " + Double.valueOf(order.getProduct().getPrice()) * order.getQuantity())
+                .setHeader(TOTAL_PRICE).setFlexGrow(10);
 
         add(leftPanel);
         add(ordersLIst);
