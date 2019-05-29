@@ -5,6 +5,7 @@ import com.pokupaka.backend.data.entity.*;
 import com.pokupaka.backend.repositories.DealRepository;
 import com.pokupaka.backend.repositories.OrderRepository;
 import com.pokupaka.backend.service.ProductService;
+import com.pokupaka.ui.utils.PokupakaAppConst;
 import com.pokupaka.ui.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -22,6 +23,7 @@ import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Currency;
 import java.util.Optional;
 
 import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.*;
@@ -42,6 +44,7 @@ public class DealDetailsView extends HorizontalLayout implements HasUrlParameter
     private Dialog participateDialog;
     private CurrentUser currentUser;
 
+    private static String currencySymbol = Currency.getInstance(PokupakaAppConst.APP_LOCALE).getSymbol();
 
     @Autowired
     public DealDetailsView(DealRepository dealRepository,
@@ -72,6 +75,7 @@ public class DealDetailsView extends HorizontalLayout implements HasUrlParameter
         grid.addColumn(order -> order.getProduct().getName()).setHeader(PRODUCT).setFlexGrow(20);
         grid.addColumn(Order::getQuantity).setHeader(QUANTITY).setFlexGrow(10);
         grid.addColumn(order -> order.getStatus().getValue()).setHeader(STATUS).setFlexGrow(20);
+        grid.addColumn(order -> currencySymbol + " " + order.getTotalPrice()).setHeader(TOTAL_PRICE).setFlexGrow(10);
 
         add(leftPanel);
         add(ordersLIst);
@@ -106,12 +110,12 @@ public class DealDetailsView extends HorizontalLayout implements HasUrlParameter
         product.setItems(productService.getProductsByCategory(deal.getCategory()));
 
         TextField quantity = new TextField(QUANTITY);;
-        quantity.setPattern("[1-9]*");
+        quantity.setPattern("[0-9]*");
         quantity.setPreventInvalidInput(true);
 
         Button confirm = new Button(CONFIRM);
 
-        confirm.addClickListener(e -> startNewOrderAndClose(product, quantity,dialog));
+        confirm.addClickListener(e -> startNewOrderAndClose(product, quantity, dialog));
 
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);

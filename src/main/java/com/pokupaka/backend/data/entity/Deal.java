@@ -20,6 +20,13 @@ public class Deal extends AbstractEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "total_value")
+    private double totalValue;
+
+    @Column(name = "min_value")
+    private double minValue;
+
+
     public Deal() {
     }
 
@@ -27,6 +34,7 @@ public class Deal extends AbstractEntity {
         this.name = name;
         this.status = status;
         this.category = category;
+        this.minValue = 10000;
     }
 
     public String getName() {

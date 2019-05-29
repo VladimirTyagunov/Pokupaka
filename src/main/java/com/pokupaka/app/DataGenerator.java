@@ -101,7 +101,6 @@ public class DataGenerator implements HasLogger {
 		dealRepository.saveAll(new ArrayList<>(Arrays.asList(deal1,deal2,deal3)));
 		orderRepository.saveAll(new ArrayList<>(Arrays.asList(order1,order2,order3,order4,order5,order6)));
 
-
 		//fillMyData();
 		logger.info("My data generated");
 	}
@@ -125,8 +124,8 @@ public class DataGenerator implements HasLogger {
 	}
 
 	private User createRegularUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		return userRepository.save(createUser("user1@mail.ru", "urer1", "urer1",
-				passwordEncoder.encode("user1"),
+		return userRepository.save(createUser("user@pokupaka.com", "userName1", "userName2",
+				passwordEncoder.encode("user"),
 				Role.USER, true));
 	}
 

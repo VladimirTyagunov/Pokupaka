@@ -30,6 +30,9 @@ public class Order extends AbstractEntity {
     @Column(name = "quantity")
     private int quantity = 1;
 
+    @Column(name = "total_price")
+    private double totalPrice;
+
     public Order() {
     }
 
@@ -39,6 +42,9 @@ public class Order extends AbstractEntity {
         this.user = user;
         this.product = product;
         this.quantity = quantity;
+//        this.totalPrice = this.quantity * Double.valueOf(this.product.getPrice());
+
+        this.totalPrice = quantity * Double.valueOf(product.getPrice());
     }
 
     public Status getStatus() {
@@ -63,5 +69,13 @@ public class Order extends AbstractEntity {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

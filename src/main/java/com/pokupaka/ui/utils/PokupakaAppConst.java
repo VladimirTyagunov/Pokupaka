@@ -32,8 +32,10 @@ public class PokupakaAppConst {
 		public static final String STATUS = "Status";
 		public static final String CATEGORY = "Category";
 		public static final String PRICE = "Price";
+		public static final String TOTAL_PRICE = "Total Price";
 		public static final String ORDER_NUM = "Order №";
 		public static final String CONFIRM = "Confirm";
+
 	}
 
 	public static final String[] ORDER_SORT_FIELDS = {"dueDate", "dueTime", "id"};

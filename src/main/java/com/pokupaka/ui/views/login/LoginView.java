@@ -22,7 +22,7 @@ public class LoginView extends LoginOverlay implements AfterNavigationObserver, 
 		i18n.setHeader(new LoginI18n.Header());
 		i18n.getHeader().setTitle("PokupakaApp");
 		// TODO
-		i18n.getHeader().setDescription("admin@vaadin.com + admin\n" + "barista@vaadin.com + barista");
+		i18n.getHeader().setDescription("admin@vaadin.com + admin\n" + "user@pokupaka.com + user");
 		i18n.setAdditionalInformation(null);
 		i18n.setForm(new LoginI18n.Form());
 		i18n.getForm().setSubmit("Sign in");

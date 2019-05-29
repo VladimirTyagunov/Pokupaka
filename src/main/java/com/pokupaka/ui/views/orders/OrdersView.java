@@ -25,14 +25,16 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
+import java.util.Currency;
 
-import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.DEALS;
-import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.PRODUCT;
+import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.*;
 import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_ORDERS;
 
 @Route(value = PAGE_ORDERS, layout = MainLayout.class)
 @PageTitle(PokupakaAppConst.TITLE_MY_ORDERS)
 public class OrdersView extends AbstractPokupakaCrudView<Order> {
+
+    private static String currencySymbol = Currency.getInstance(PokupakaAppConst.APP_LOCALE).getSymbol();
 
     @Autowired
     public OrdersView(OrderService service,
@@ -45,10 +47,14 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
     @Override
     protected void setupGrid(Grid<Order> grid) {
         grid.addColumn(Order::getId).setHeader("№").setFlexGrow(3);
-        grid.addColumn(order-> order.getStatus().getValue()).setHeader("Status").setFlexGrow(10);
+        grid.addColumn(order-> order.getStatus().getValue()).setHeader(STATUS).setFlexGrow(10);
         //grid.addColumn(Order::getCategory).setHeader("Category").setFlexGrow(10);
-        grid.addColumn(order -> order.getProduct().getName()).setHeader("Product").setFlexGrow(10);
-        grid.addColumn(Order::getQuantity).setHeader("Quantity").setFlexGrow(10);
+        grid.addColumn(order -> order.getProduct().getName()).setHeader(PRODUCT).setFlexGrow(10);
+        grid.addColumn(Order::getQuantity).setHeader(QUANTITY).setFlexGrow(10);
+//        grid.addColumn(order -> currencySymbol + " " + order.getTotalPrice()).setHeader(TOTAL_PRICE).setFlexGrow(10);
+        grid.addColumn(order -> currencySymbol + " " + Double.valueOf(order.getProduct().getPrice()) * order.getQuantity())
+                .setHeader(TOTAL_PRICE).setFlexGrow(10);
+
     }
 
     @Override
@@ -56,18 +62,18 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
         return PAGE_ORDERS;
     }
 
-    private static BinderCrudEditor<Order> createForm(ProductDataProvider productDataProvider,DealDataProvider dealDataProvider) {
+    private static BinderCrudEditor<Order> createForm(ProductDataProvider productDataProvider, DealDataProvider dealDataProvider) {
 
         /*ComboBox<Deal> deals = new ComboBox<>(DEALS);
         deals.setDataProvider(dealDataProvider);*/
 
-        ComboBox<String> status = new ComboBox<>("Status");
+        ComboBox<String> status = new ComboBox<>(STATUS);
         status.setItems(Arrays.stream(Status.values()).map(val -> val.getValue()));
 
         ComboBox<Product> product = new ComboBox<>(PRODUCT);
         product.setDataProvider(productDataProvider);
 
-        TextField quantity = new TextField("quantity");;
+        TextField quantity = new TextField(QUANTITY);;
         quantity.setPattern("[0-9.,]*");
         quantity.setPreventInvalidInput(true);
 
@@ -83,8 +89,11 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
         binder.bind(product, order -> order.getProduct(),
                     (deal, prodVal) -> deal.setProduct(prodVal));
 
-        binder.bind(quantity,order -> String.valueOf(order.getQuantity()),
-                (order, qValue) -> order.setQuantity(Integer.valueOf(qValue)));
+        binder.bind(quantity, order -> String.valueOf(order.getQuantity()),
+                (order, qValue) -> {
+                    order.setQuantity(Integer.valueOf(qValue));
+                    order.setTotalPrice(Double.valueOf(order.getProduct().getPrice()) * order.getQuantity());
+                });
 
         binder.bind(status, deal -> getStatusStrIfNotNull(deal.getStatus()),
                 (deal, stVal) -> deal.setStatus(Status.findByStrValue(stVal)));
