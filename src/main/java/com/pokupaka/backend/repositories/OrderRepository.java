@@ -1,6 +1,7 @@
 package com.pokupaka.backend.repositories;
 
 import com.pokupaka.backend.data.entity.Order;
+import com.pokupaka.backend.data.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     List<Order> findByDealId(Long dealId);
 
     List<Order> findByUserId(Long dealId);
+
+    List<Order> findByUser(User user);
 }

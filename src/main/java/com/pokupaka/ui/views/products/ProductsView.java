@@ -5,15 +5,12 @@ import com.pokupaka.backend.data.Role;
 import com.pokupaka.backend.data.entity.Category;
 import com.pokupaka.backend.data.entity.Product;
 import com.pokupaka.backend.service.ProductService;
-import com.pokupaka.ui.dataproviders.CategoryDataProvider;
-import com.pokupaka.ui.views.MainLayout;
 import com.pokupaka.ui.crud.AbstractPokupakaCrudView;
+import com.pokupaka.ui.dataproviders.CategoryDataProvider;
 import com.pokupaka.ui.utils.PokupakaAppConst;
-import com.pokupaka.ui.utils.converters.CurrencyFormatter;
-import com.vaadin.flow.component.Tag;
+import com.pokupaka.ui.views.MainLayout;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.crud.BinderCrudEditor;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
@@ -30,16 +27,12 @@ import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.CATEGORY;
 import static com.pokupaka.ui.utils.PokupakaAppConst.Labels.PRICE;
 import static com.pokupaka.ui.utils.PokupakaAppConst.PAGE_PRODUCTS;
 
-@Tag("products-view")
-@HtmlImport("src/views/storefront/products-view.html")
 @Route(value = PAGE_PRODUCTS, layout = MainLayout.class)
 @PageTitle(PokupakaAppConst.TITLE_PRODUCTS)
 @Secured(Role.ADMIN)
 public class ProductsView extends AbstractPokupakaCrudView<Product> {
 
-	private CurrencyFormatter currencyFormatter = new CurrencyFormatter();
 	private static String currencySymbol = Currency.getInstance(PokupakaAppConst.APP_LOCALE).getSymbol();
-
 
 	@Autowired
 	public ProductsView(ProductService service, CategoryDataProvider categoryDataProvider, CurrentUser currentUser) {
@@ -50,7 +43,7 @@ public class ProductsView extends AbstractPokupakaCrudView<Product> {
 	protected void setupGrid(Grid<Product> grid) {
 		grid.addColumn(Product::getName).setHeader("Product Name").setFlexGrow(10);
 		grid.addColumn(deal -> deal.getCategory().getName()).setHeader(CATEGORY).setFlexGrow(10);
-		grid.addColumn(p -> currencySymbol + " " + String.valueOf(p.getPrice())).setHeader(PRICE).setFlexGrow(10);
+		grid.addColumn(p -> currencySymbol + " " + p.getPrice()).setHeader(PRICE).setFlexGrow(10);
 	}
 
 	@Override
@@ -76,11 +69,8 @@ public class ProductsView extends AbstractPokupakaCrudView<Product> {
 		BeanValidationBinder<Product> binder = new BeanValidationBinder<>(Product.class);
 
 		binder.bind(name, "name");
+		binder.bind(category, Product::getCategory, Product::setCategory);
 
-		binder.bind(category, deal -> deal.getCategory(),
-				(deal, categoryVal) -> deal.setCategory(categoryVal));
-
-		//binder.forField(price).withConverter(new PriceConverter()).bind("price");
 		binder.bind(price,"price");
 		price.setPattern("\\d+(\\.\\d?\\d?)?$");
 		price.setPreventInvalidInput(true);

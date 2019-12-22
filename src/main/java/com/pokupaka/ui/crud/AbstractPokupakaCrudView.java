@@ -22,6 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -58,7 +59,7 @@ public abstract class AbstractPokupakaCrudView<E extends AbstractEntity> extends
         CrudEntityDataProvider<E> dataProvider = new CrudEntityDataProvider<>(service);
         grid.setDataProvider(dataProvider);
         setupGrid(grid);
-        List<String> allowedUsersToShowEditColumn = Arrays.asList(Role.ADMIN);
+        List<String> allowedUsersToShowEditColumn = Collections.singletonList(Role.ADMIN);
         Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
         boolean canSeeEditColumn = userAuthentication.getAuthorities()
                                                      .stream().map(GrantedAuthority::getAuthority)
@@ -99,7 +100,7 @@ public abstract class AbstractPokupakaCrudView<E extends AbstractEntity> extends
                 entityPresenter.delete(e.getItem(), onSuccess, onFail));
     }
 
-    protected void navigateToEntity(String id) {
+    private void navigateToEntity(String id) {
         getUI().ifPresent(ui -> ui.navigate(TemplateUtil.generateLocation(getBasePage(), id)));
     }
 

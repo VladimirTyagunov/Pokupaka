@@ -68,7 +68,7 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
         deals.setDataProvider(dealDataProvider);*/
 
         ComboBox<String> status = new ComboBox<>(STATUS);
-        status.setItems(Arrays.stream(Status.values()).map(val -> val.getValue()));
+        status.setItems(Arrays.stream(Status.values()).map(Status::getValue));
 
         ComboBox<Product> product = new ComboBox<>(PRODUCT);
         product.setDataProvider(productDataProvider);
@@ -86,13 +86,12 @@ public class OrdersView extends AbstractPokupakaCrudView<Order> {
 
         BeanValidationBinder<Order> binder = new BeanValidationBinder<>(Order.class);
 
-        binder.bind(product, order -> order.getProduct(),
-                    (deal, prodVal) -> deal.setProduct(prodVal));
+        binder.bind(product, Order::getProduct, Order::setProduct);
 
         binder.bind(quantity, order -> String.valueOf(order.getQuantity()),
                 (order, qValue) -> {
-                    order.setQuantity(Integer.valueOf(qValue));
-                    order.setTotalPrice(Double.valueOf(order.getProduct().getPrice()) * order.getQuantity());
+                    order.setQuantity(Integer.parseInt(qValue));
+                    order.setTotalPrice(Double.parseDouble(order.getProduct().getPrice()) * order.getQuantity());
                 });
 
         binder.bind(status, deal -> getStatusStrIfNotNull(deal.getStatus()),

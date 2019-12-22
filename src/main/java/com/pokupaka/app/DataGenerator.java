@@ -63,6 +63,7 @@ public class DataGenerator implements HasLogger {
 		User admin1 = createAdmin(userRepository, passwordEncoder);
 		User admin2 = createAdmin2(userRepository, passwordEncoder);
 		User man1 = createManager(userRepository,passwordEncoder);
+		User doNotDeleteMePlease = createRegularUserForDelete(userRepository,passwordEncoder);
 		User regUser = createRegularUser(userRepository,passwordEncoder);
 		getLogger().info("Users created");
 
@@ -75,9 +76,9 @@ public class DataGenerator implements HasLogger {
 		Product pencil = new Product("Pencil","4","Just a pencil", stationery);
 		Product ruler = new Product("Ruler","3","Just a ruler", stationery);
 
-		Product mop = new Product("Mop","15","Mop description", stationery);
-		Product vacuumСleaner = new Product("Vacuum cleaner","150","Vacuum cleaner description", furniture);
-		Product cup = new Product("Cup","10","Cup description", furniture);
+		Product mop = new Product("Mop","15","Mop description", householdGoods);
+		Product vacuumСleaner = new Product("Vacuum cleaner","150","Vacuum cleaner description", householdGoods);
+		Product cup = new Product("Cup","10","Cup description", householdGoods);
 
 		Product table = new Product("Table","100","Table description", furniture);
 		Product chair = new Product("Chair","50","Chair description", furniture);
@@ -127,6 +128,15 @@ public class DataGenerator implements HasLogger {
 		return userRepository.save(createUser("user@pokupaka.com", "userName1", "userName2",
 				passwordEncoder.encode("user"),
 				Role.USER, true));
+	}
+
+	private User createRegularUserForDelete(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		return userRepository.save(
+				createUser("doNotDeleteMePlease@pokupaka.com",
+						"doNotDeleteMePlease",
+						"doNotDeleteMePlease",
+				passwordEncoder.encode("user"),
+				Role.MANAGER, false));
 	}
 
 	private User createUser(String email, String firstName, String lastName, String passwordHash, String role,

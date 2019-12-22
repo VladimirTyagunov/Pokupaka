@@ -15,11 +15,9 @@ import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 
 import static com.pokupaka.ui.utils.PokupakaAppConst.*;
+import static com.vaadin.flow.component.icon.VaadinIcon.*;
 
 @HtmlImport("frontend://styles/shared-styles.html")
-//@PWA(name = "Beverage Buddy", shortName = "BevBuddy")
-//@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-
 public class MainLayout  extends AbstractAppRouterLayout implements PageConfigurator {
 
     @Override
@@ -27,19 +25,17 @@ public class MainLayout  extends AbstractAppRouterLayout implements PageConfigur
         appLayout.setBranding(new Span("PokupakaApp"));
 
         if (SecurityUtils.isUserLoggedIn()) {
-
             if (SecurityUtils.isAccessGranted(ProductsView.class)) {
-                setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.RECORDS.create(), TITLE_PRODUCTS, PAGE_PRODUCTS));
+                setMenuItem(menu, RECORDS, TITLE_PRODUCTS, PAGE_PRODUCTS);
             }
-            setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.CART.create(), TITLE_MY_ORDERS, PAGE_ORDERS));
-            setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.HANDSHAKE.create(), TITLE_DEALS, PAGE_DEALS));
-
+            setMenuItem(menu, CART, TITLE_MY_ORDERS, PAGE_ORDERS);
+            setMenuItem(menu, HANDSHAKE, TITLE_DEALS, PAGE_DEALS);
             if (SecurityUtils.isAccessGranted(UsersView.class)) {
-                setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.USERS.create(), TITLE_USERS, PAGE_USERS));
+                setMenuItem(menu, USERS, TITLE_USERS, PAGE_USERS);
             }
 
-            AppLayoutMenuItem logoutMenuItem = new AppLayoutMenuItem(VaadinIcon.SIGN_OUT.create(), TITLE_LOGOUT, e ->
-                    UI.getCurrent().getPage().executeJavaScript("location.assign('logout')"));
+            AppLayoutMenuItem logoutMenuItem = new AppLayoutMenuItem(VaadinIcon.SIGN_OUT.create(),
+                    TITLE_LOGOUT, e -> UI.getCurrent().getPage().executeJavaScript("location.assign('logout')"));
             setMenuItem(menu,logoutMenuItem);
         }
         getElement().addEventListener("search-focus", e -> {
@@ -56,6 +52,15 @@ public class MainLayout  extends AbstractAppRouterLayout implements PageConfigur
         menu.addMenuItem(menuItem);
     }
 
+    private void setMenuItem(AppLayoutMenu menu, VaadinIcon icon, String title, String route) {
+        AppLayoutMenuItem menuItem = createMenuItem(icon, title, route);
+        menuItem.getElement().setAttribute("theme", "icon-on-top");
+        menu.addMenuItem(menuItem);
+    }
+
+    private AppLayoutMenuItem createMenuItem(VaadinIcon icon, String title, String route) {
+        return new AppLayoutMenuItem(icon.create(), title, route);
+    }
 
     @Override
     public void configurePage(InitialPageSettings settings) {
